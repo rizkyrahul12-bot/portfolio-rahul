@@ -7,121 +7,139 @@ function App() {
     {
       title: "OCR Voucher Telegram Bot",
       image: ocrBot,
-      desc: "Bot Telegram berbasis Python yang membaca invoice dan voucher menggunakan OCR lalu otomatis menyimpan data ke Excel.",
-      result: "Mempercepat pekerjaan admin dan mengurangi input manual.",
+      desc: "Bot Telegram berbasis Python untuk membaca invoice dan voucher dari foto, lalu menyimpan hasilnya ke Excel otomatis.",
       tools: ["Python", "OCR", "Telegram Bot", "Excel"],
     },
-
     {
-      title: "Web Automation Selenium",
+      title: "Selenium Web Automation",
       image: ocrBot,
-      desc: "Automation input invoice ke website menggunakan Selenium.",
-      result: "Menghemat waktu input data.",
-      tools: ["Python", "Selenium", "Automation"],
+      desc: "Automation untuk input data invoice ke website, memilih dropdown, submit form, dan skip error otomatis.",
+      tools: ["Python", "Selenium", "Web Automation"],
     },
-
     {
-      title: "PDF Auto Print System",
+      title: "AI Video Automation Pipeline",
       image: ocrBot,
-      desc: "Sistem otomatis mendeteksi PDF baru lalu langsung print ke printer default.",
-      result: "Workflow print menjadi otomatis.",
-      tools: ["Python", "PDF", "Printer"],
+      desc: "Workflow otomatis untuk membuat video AI dari gambar, prompt, download hasil, dan gabung video.",
+      tools: ["Python", "AI Video", "Automation"],
     },
   ]
 
   return (
     <div className="page">
-      <section className="hero">
-        <div className="hero-text">
-          <p className="badge">PYTHON AUTOMATION DEVELOPER</p>
+      <nav className="navbar">
+        <div className="logo">RS</div>
+        <div className="nav-links">
+          <a href="#about">About</a>
+          <a href="#skills">Skills</a>
+          <a href="#projects">Projects</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </nav>
 
-          <h1 className="title">
-            Rahul <span className="blue">Sidabutar</span>
+      <section className="hero">
+        <div className="hero-left">
+          <p className="badge">AI AUTOMATION DEVELOPER</p>
+
+          <h1>
+            Halo, saya <br />
+            <span className="gradient-text typing-text">
+              Rizky Rahul Sidabutar
+            </span>
           </h1>
 
-          <p className="subtitle">
-            Saya membuat automation sederhana untuk membantu pekerjaan admin
-            menjadi lebih cepat, rapi, dan mengurangi input manual.
+          <p className="hero-desc">
+            Saya belajar dan membangun automation menggunakan Python untuk
+            membantu pekerjaan admin, OCR, input data website, Telegram bot,
+            dan workflow konten AI.
           </p>
 
-          <div className="buttons">
-            <a
-              className="primary-btn"
-              href="https://wa.me/628xxxxxxxxxx"
-            >
-              Hubungi Saya
+          <div className="hero-buttons">
+            <a className="primary-btn" href="#projects">
+              View Projects
             </a>
+            <a className="secondary-btn" href="https://wa.me/628xxxxxxxxxx">
+              Contact Me
+            </a>
+          </div>
 
-            <a className="secondary-btn" href="#projects">
-              Lihat Project
-            </a>
+          <div className="mini-skills">
+            <span>⚡ Python</span>
+            <span>🤖 Automation</span>
+            <span>🎬 AI Content</span>
           </div>
         </div>
 
-        <div className="profile-card">
-          <img
-            src={rahulPhoto}
-            alt="Rahul"
-            className="profile-photo"
-          />
+        <div className="hero-right">
+          <div className="photo-glow">
+            <img src={rahulPhoto} alt="Rahul" />
+          </div>
+        </div>
+      </section>
 
-          <h3>Automation Portfolio</h3>
+      <section id="about" className="section glass">
+        <h2>About Me</h2>
+        <p>
+          Saya fokus membuat sistem sederhana yang bisa mempercepat pekerjaan
+          manual. Project yang saya buat meliputi OCR invoice, Telegram bot,
+          Selenium automation, Excel automation, PDF automation, dan pipeline
+          konten AI.
+        </p>
+      </section>
 
-          <p className="profile-text">
-            Python • OCR • Selenium • Excel
-          </p>
+      <section id="skills" className="section">
+        <h2>Skills</h2>
+        <div className="skills">
+          {[
+            "Python",
+            "Selenium",
+            "OCR",
+            "Excel Automation",
+            "Telegram Bot",
+            "PDF Automation",
+            "GitHub",
+            "React Portfolio",
+            "AI Video Workflow",
+          ].map((skill) => (
+            <span key={skill}>{skill}</span>
+          ))}
         </div>
       </section>
 
       <section id="projects" className="section">
-        <h2 className="section-title">Project Automation</h2>
+        <h2>Projects</h2>
 
-        <div className="grid">
+        <div className="project-grid">
           {projects.map((project, index) => (
-            <div className="card" key={index}>
-              <img
-                src={project.image}
-                alt={project.title}
-                className="project-image"
-              />
+            <div className="project-card" key={index}>
+              <img src={project.image} alt={project.title} />
 
-              <div className="number">
-                0{index + 1}
-              </div>
+              <div className="project-content">
+                <p className="project-number">0{index + 1}</p>
+                <h3>{project.title}</h3>
+                <p>{project.desc}</p>
 
-              <h3 className="card-title">
-                {project.title}
-              </h3>
-
-              <p className="card-desc">
-                {project.desc}
-              </p>
-
-              <p className="project-result">
-                {project.result}
-              </p>
-
-              <div className="tool-wrap">
-                {project.tools.map((tool) => (
-                  <span className="tool" key={tool}>
-                    {tool}
-                  </span>
-                ))}
+                <div className="tools">
+                  {project.tools.map((tool) => (
+                    <span key={tool}>{tool}</span>
+                  ))}
+                </div>
               </div>
             </div>
           ))}
         </div>
       </section>
 
-      <section className="contact">
-        <h2 className="section-title">Kontak</h2>
-
-        <p className="subtitle">
-          Butuh automation untuk pekerjaan admin,
-          invoice, Excel, atau website?
-          Saya bisa bantu membuat workflow otomatis
-          menggunakan Python.
+      <section id="contact" className="section contact glass">
+        <h2>Let’s Build Automation</h2>
+        <p>
+          Butuh automation untuk pekerjaan admin, invoice, Excel, website, atau
+          workflow konten AI? Saya siap membantu membuat solusi sederhana dengan
+          Python.
         </p>
+
+        <a className="primary-btn" href="https://wa.me/628xxxxxxxxxx">
+          Hubungi Saya
+        </a>
       </section>
     </div>
   )
