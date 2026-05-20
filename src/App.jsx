@@ -15,6 +15,14 @@ const tools = [
   { name: "Docker", icon: "🐳" },
 ];
 
+const problems = [
+  ["Input data manual memakan waktu berjam-jam", "Otomatis input data dari banyak sumber"],
+  ["Sering salah ketik dan data tidak valid", "Validasi otomatis untuk mengurangi kesalahan"],
+  ["Copy-paste berulang yang membosankan", "Bot otomatis untuk pekerjaan berulang"],
+  ["Rekap laporan dari banyak file", "Gabungkan dan olah data otomatis"],
+  ["Deadline mepet karena pekerjaan menumpuk", "Proses lebih cepat dan rapi"],
+];
+
 const projects = [
   {
     title: "Sistem Otomatisasi Invoice",
@@ -41,6 +49,8 @@ const projects = [
 
 function ElasticNameTag() {
   const tagRef = useRef(null);
+  const leftRubberRef = useRef(null);
+  const rightRubberRef = useRef(null);
   const draggingRef = useRef(false);
   const posRef = useRef({ x: 0, y: 0 });
   const velRef = useRef({ x: 0, y: 0 });
@@ -54,10 +64,8 @@ function ElasticNameTag() {
       const vel = velRef.current;
 
       if (draggingRef.current) {
-        const dx = pointerRef.current.x - pos.x;
-        const dy = pointerRef.current.y - pos.y;
-        vel.x += dx * 0.23;
-        vel.y += dy * 0.23;
+        vel.x += (pointerRef.current.x - pos.x) * 0.22;
+        vel.y += (pointerRef.current.y - pos.y) * 0.22;
       } else {
         vel.x += (0 - pos.x) * 0.075;
         vel.y += (0 - pos.y) * 0.075;
@@ -65,7 +73,6 @@ function ElasticNameTag() {
 
       vel.x *= 0.7;
       vel.y *= 0.7;
-
       pos.x += vel.x;
       pos.y += vel.y;
 
@@ -76,6 +83,19 @@ function ElasticNameTag() {
 
       if (tagRef.current) {
         tagRef.current.style.transform = `translate3d(${pos.x}px, ${pos.y}px, 0) rotate(${rotate}deg) scale(${scaleX}, ${scaleY})`;
+      }
+
+      const ropeHeight = 175 + Math.max(0, pos.y) * 0.55 + Math.abs(pos.x) * 0.16;
+      const ropeTilt = Math.max(-24, Math.min(24, pos.x * 0.08));
+
+      if (leftRubberRef.current) {
+        leftRubberRef.current.style.height = `${ropeHeight}px`;
+        leftRubberRef.current.style.transform = `rotate(${-12 + ropeTilt * 0.35}deg)`;
+      }
+
+      if (rightRubberRef.current) {
+        rightRubberRef.current.style.height = `${ropeHeight}px`;
+        rightRubberRef.current.style.transform = `rotate(${12 + ropeTilt * 0.35}deg)`;
       }
 
       frameRef.current = requestAnimationFrame(animate);
@@ -127,8 +147,8 @@ function ElasticNameTag() {
 
   return (
     <div className="elastic-stage">
-      <div className={`rubber rubber-left ${dragging ? "stretching" : ""}`}></div>
-      <div className={`rubber rubber-right ${dragging ? "stretching" : ""}`}></div>
+      <div ref={leftRubberRef} className="rubber rubber-left"></div>
+      <div ref={rightRubberRef} className="rubber rubber-right"></div>
 
       <div
         ref={tagRef}
@@ -180,18 +200,13 @@ function App() {
         </div>
 
         <a href={whatsappLink} target="_blank" rel="noreferrer" className="wa-top">
-          <span>☘</span> WhatsApp Saya
+          Hubungi Saya
         </a>
       </nav>
 
       <section id="home" className="hero">
         <div className="hero-left">
-          <div className="status-pill">
-            <span></span>
-            Tersedia untuk Freelance & Kesempatan Kerja
-          </div>
-
-          <h1>
+          <h1 className="reveal-title">
             Saya Membangun Sistem Otomatisasi dengan <b>Python & AI</b>
           </h1>
 
@@ -202,7 +217,7 @@ function App() {
 
           <div className="hero-actions">
             <a href={whatsappLink} target="_blank" rel="noreferrer" className="btn wa-btn">
-              <span>☘</span> Chat via WhatsApp
+              Hubungi Saya
             </a>
             <a href="#projects" className="btn outline-btn">
               Lihat Proyek Saya
@@ -221,7 +236,7 @@ function App() {
               <p><span>&gt;</span> memindai dokumen <b>100%</b></p>
               <p><span>&gt;</span> mengekstrak data <b>100%</b></p>
               <p><span>&gt;</span> memproses data <b>100%</b></p>
-              <p><span>&gt;</span> menyimpan hasil <strong>berhasil ✅</strong></p>
+              <p><span>&gt;</span> otomatisasi selesai <strong>berhasil ✅</strong></p>
             </div>
           </div>
         </div>
@@ -244,6 +259,44 @@ function App() {
             <div className="tool-card" style={{ "--i": index }} key={tool.name}>
               <div className="tool-icon">{tool.icon}</div>
               <p>{tool.name}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="admin-solution">
+        <div className="admin-left">
+          <small>UNTUK PARA ADMIN</small>
+          <h2>Masih input data manual setiap hari?</h2>
+          <h3>Saatnya kerja lebih mudah dan efisien.</h3>
+          <p>
+            Pekerjaan repetitif seperti input data, copy-paste, validasi file,
+            dan rekap laporan bisa diotomatisasi. Saya bantu Anda menghemat
+            waktu, mengurangi kesalahan, dan fokus pada pekerjaan yang lebih penting.
+          </p>
+
+          <a href={whatsappLink} target="_blank" rel="noreferrer" className="btn wa-btn">
+            Hubungi Saya
+          </a>
+
+          <div className="trust-list">
+            <span>Aman</span>
+            <span>Cepat</span>
+            <span>Terpercaya</span>
+          </div>
+        </div>
+
+        <div className="admin-right">
+          <div className="solution-head">
+            <h3>Masalah yang Sering Dihadapi</h3>
+            <h3>Solusi Otomatisasi</h3>
+          </div>
+
+          {problems.map(([problem, solution]) => (
+            <div className="solution-row" key={problem}>
+              <p>{problem}</p>
+              <span>→</span>
+              <p>{solution}</p>
             </div>
           ))}
         </div>
@@ -296,15 +349,14 @@ function App() {
       </section>
 
       <section id="contact" className="contact-panel">
-        <div className="wa-circle">☘</div>
+        <div className="wa-circle">☎</div>
         <div>
-          <h2>Punya proyek untuk diotomatisasi?</h2>
-          <p>Hubungi saya langsung via WhatsApp.</p>
+          <h2>Ubah pekerjaan manual menjadi otomatis.</h2>
+          <p>Lebih cepat, lebih akurat, lebih efisien.</p>
         </div>
 
         <a href={whatsappLink} target="_blank" rel="noreferrer" className="wa-contact">
-          <strong>+62 821-7025-2082</strong>
-          <span>WhatsApp Saya</span>
+          Hubungi Saya
         </a>
       </section>
 
