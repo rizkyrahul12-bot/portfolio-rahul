@@ -5,46 +5,22 @@ import foto from "./assets/fotoku.png";
 const whatsappLink = "https://wa.me/6282170252082";
 
 const tools = [
-  { name: "Python", icon: "🐍" },
-  { name: "Selenium", icon: "✅" },
-  { name: "OCR", icon: "▣" },
-  { name: "Pandas", icon: "▥" },
-  { name: "Telegram", icon: "✈️" },
-  { name: "Excel", icon: "📊" },
-  { name: "GitHub", icon: "🐙" },
-  { name: "Docker", icon: "🐳" },
+  { name: "Python", short: "Py" },
+  { name: "Selenium", short: "Se" },
+  { name: "OCR", short: "OCR" },
+  { name: "Pandas", short: "Pd" },
+  { name: "Telegram", short: "Tg" },
+  { name: "Excel", short: "Xl" },
+  { name: "GitHub", short: "Git" },
+  { name: "Docker", short: "Dc" },
 ];
 
 const problems = [
-  ["Input data manual memakan waktu berjam-jam", "Otomatis input data dari banyak sumber"],
-  ["Sering salah ketik dan data tidak valid", "Validasi otomatis untuk mengurangi kesalahan"],
-  ["Copy-paste berulang yang membosankan", "Bot otomatis untuk pekerjaan berulang"],
-  ["Rekap laporan dari banyak file", "Gabungkan dan olah data otomatis"],
-  ["Deadline mepet karena pekerjaan menumpuk", "Proses lebih cepat dan rapi"],
-];
-
-const projects = [
-  {
-    title: "Sistem Otomatisasi Invoice",
-    status: "Selesai",
-    image: "📄",
-    desc: "Otomatisasi pemrosesan invoice menggunakan OCR, validasi pola data, dan export ke Excel.",
-    tech: ["Python", "OCR", "Pandas", "Selenium"],
-  },
-  {
-    title: "Bot Telegram OCR",
-    status: "Selesai",
-    image: "💬",
-    desc: "Bot Telegram untuk membaca invoice/voucher dari foto dan menyimpan hasilnya ke Excel.",
-    tech: ["Python", "Telegram", "OCR"],
-  },
-  {
-    title: "AI Video Workflow",
-    status: "Dalam Proses",
-    image: "🎬",
-    desc: "Workflow produksi video AI dari prompt, scene, narasi, hingga penggabungan klip.",
-    tech: ["AI", "Python", "Video"],
-  },
+  ["Input data manual memakan waktu berjam-jam", "Otomatis input data dari berbagai sumber ke sistem Anda"],
+  ["Sering terjadi salah ketik dan data tidak valid", "Validasi otomatis untuk mengurangi kesalahan"],
+  ["Copy-paste berulang yang membosankan", "Bot otomatis untuk tugas berulang"],
+  ["Rekap laporan dari banyak file & sumber", "Gabungkan dan olah data otomatis"],
+  ["Deadline mepet karena pekerjaan menumpuk", "Proses lebih cepat, Anda bisa fokus ke pekerjaan penting"],
 ];
 
 function ElasticNameTag() {
@@ -77,22 +53,21 @@ function ElasticNameTag() {
       pos.y += vel.y;
 
       const distance = Math.min(1, Math.hypot(pos.x, pos.y) / 260);
-      const rotate = pos.x * 0.04;
-      const scaleY = 1 + distance * 0.04;
-      const scaleX = 1 - distance * 0.015;
+      const rotate = pos.x * 0.038 + 4;
+      const scaleY = 1 + distance * 0.035;
+      const scaleX = 1 - distance * 0.012;
 
       if (tagRef.current) {
         tagRef.current.style.transform = `translate3d(${pos.x}px, ${pos.y}px, 0) rotate(${rotate}deg) scale(${scaleX}, ${scaleY})`;
       }
 
-      const ropeHeight = 175 + Math.max(0, pos.y) * 0.55 + Math.abs(pos.x) * 0.16;
-      const ropeTilt = Math.max(-24, Math.min(24, pos.x * 0.08));
+      const ropeHeight = 190 + Math.max(0, pos.y) * 0.62 + Math.abs(pos.x) * 0.12;
+      const ropeTilt = Math.max(-22, Math.min(22, pos.x * 0.07));
 
       if (leftRubberRef.current) {
         leftRubberRef.current.style.height = `${ropeHeight}px`;
         leftRubberRef.current.style.transform = `rotate(${-12 + ropeTilt * 0.35}deg)`;
       }
-
       if (rightRubberRef.current) {
         rightRubberRef.current.style.height = `${ropeHeight}px`;
         rightRubberRef.current.style.transform = `rotate(${12 + ropeTilt * 0.35}deg)`;
@@ -136,7 +111,6 @@ function ElasticNameTag() {
     window.addEventListener("mouseup", endDrag);
     window.addEventListener("touchmove", moveDrag, { passive: true });
     window.addEventListener("touchend", endDrag);
-
     return () => {
       window.removeEventListener("mousemove", moveDrag);
       window.removeEventListener("mouseup", endDrag);
@@ -157,15 +131,12 @@ function ElasticNameTag() {
         onTouchStart={startDrag}
       >
         <div className="metal-ring"></div>
-
         <div className="id-card">
           <div className="id-hole"></div>
           <div className="id-shine"></div>
-
           <div className="photo-frame">
             <img src={foto} alt="Rizky Rahul Sidabutar" draggable="false" />
           </div>
-
           <div className="id-info">
             <h3>RAHUL</h3>
             <p>Automation Builder</p>
@@ -188,11 +159,11 @@ function App() {
       <nav className="navbar">
         <div className="brand">
           <span className="code-icon">&lt;/&gt;</span>
-          RAHUL<span className="dot-logo">.</span>
+          RAHUL
         </div>
 
         <div className="nav-links">
-          <a href="#home">Beranda</a>
+          <a className="active" href="#home">Home</a>
           <a href="#about">Tentang</a>
           <a href="#projects">Proyek</a>
           <a href="#skills">Keahlian</a>
@@ -217,10 +188,10 @@ function App() {
 
           <div className="hero-actions">
             <a href={whatsappLink} target="_blank" rel="noreferrer" className="btn wa-btn">
-              Hubungi Saya
+              Hubungi Saya <span>→</span>
             </a>
             <a href="#projects" className="btn outline-btn">
-              Lihat Proyek Saya
+              Lihat Proyek Saya <span>→</span>
             </a>
           </div>
 
@@ -231,12 +202,12 @@ function App() {
               <span className="lamp green"></span>
               <p>terminal@rahul:~</p>
             </div>
-
             <div className="terminal-body">
-              <p><span>&gt;</span> memindai dokumen <b>100%</b></p>
-              <p><span>&gt;</span> mengekstrak data <b>100%</b></p>
-              <p><span>&gt;</span> memproses data <b>100%</b></p>
-              <p><span>&gt;</span> otomatisasi selesai <strong>berhasil ✅</strong></p>
+              <p><span>&gt;</span> memindai dokumen... <b>100%</b></p>
+              <p><span>&gt;</span> mengekstrak data... <b>100%</b></p>
+              <p><span>&gt;</span> memproses data... <b>100%</b></p>
+              <p><span>&gt;</span> menyimpan hasil... <b>100%</b></p>
+              <p><span>&gt;</span> otomatisasi selesai <strong>berhasil ●</strong></p>
             </div>
           </div>
         </div>
@@ -257,7 +228,7 @@ function App() {
         <div className="tools-grid">
           {tools.map((tool, index) => (
             <div className="tool-card" style={{ "--i": index }} key={tool.name}>
-              <div className="tool-icon">{tool.icon}</div>
+              <div className="tool-icon">{tool.short}</div>
               <p>{tool.name}</p>
             </div>
           ))}
@@ -268,15 +239,15 @@ function App() {
         <div className="admin-left">
           <small>UNTUK PARA ADMIN</small>
           <h2>Masih input data manual setiap hari?</h2>
-          <h3>Saatnya kerja lebih mudah dan efisien.</h3>
+          <h3>Saatnya kerja lebih mudah & efisien.</h3>
           <p>
             Pekerjaan repetitif seperti input data, copy-paste, validasi file,
             dan rekap laporan bisa diotomatisasi. Saya bantu Anda menghemat
-            waktu, mengurangi kesalahan, dan fokus pada pekerjaan yang lebih penting.
+            waktu, mengurangi kesalahan, dan fokus pada hal yang lebih penting.
           </p>
 
           <a href={whatsappLink} target="_blank" rel="noreferrer" className="btn wa-btn">
-            Hubungi Saya
+            Hubungi Saya <span>→</span>
           </a>
 
           <div className="trust-list">
@@ -292,8 +263,9 @@ function App() {
             <h3>Solusi Otomatisasi</h3>
           </div>
 
-          {problems.map(([problem, solution]) => (
+          {problems.map(([problem, solution], index) => (
             <div className="solution-row" key={problem}>
+              <div className="problem-icon">{index + 1}</div>
               <p>{problem}</p>
               <span>→</span>
               <p>{solution}</p>
@@ -302,7 +274,7 @@ function App() {
         </div>
       </section>
 
-      <section id="projects" className="panel-section">
+      <section id="projects" className="panel-section projects">
         <div className="section-title row">
           <div>
             <span></span>
@@ -312,25 +284,35 @@ function App() {
         </div>
 
         <div className="project-grid">
-          {projects.map((project) => (
-            <article className="project-card" key={project.title}>
-              <div className="project-image">{project.image}</div>
+          <article className="project-card">
+            <div className="project-preview">OCR</div>
+            <div>
+              <small className="done">Selesai</small>
+              <h3>Sistem Otomatisasi Invoice</h3>
+              <p>OCR invoice, validasi data, export Excel, dan proses siap untuk workflow ERP.</p>
+              <div className="tech-list"><span>Python</span><span>OCR</span><span>Excel</span></div>
+            </div>
+          </article>
 
-              <div className="project-content">
-                <small className={project.status === "Selesai" ? "done" : "progress"}>
-                  {project.status}
-                </small>
-                <h3>{project.title}</h3>
-                <p>{project.desc}</p>
+          <article className="project-card">
+            <div className="project-preview">BOT</div>
+            <div>
+              <small className="done">Selesai</small>
+              <h3>Bot Telegram OCR</h3>
+              <p>Bot untuk membaca invoice/voucher dari foto dan menyimpan hasil ke Excel.</p>
+              <div className="tech-list"><span>Python</span><span>Telegram</span><span>OCR</span></div>
+            </div>
+          </article>
 
-                <div className="tech-list">
-                  {project.tech.map((item) => (
-                    <span key={item}>{item}</span>
-                  ))}
-                </div>
-              </div>
-            </article>
-          ))}
+          <article className="project-card">
+            <div className="project-preview">AI</div>
+            <div>
+              <small className="progress">Dalam Proses</small>
+              <h3>AI Video Workflow</h3>
+              <p>Workflow video AI dari prompt, scene, narasi, hingga penggabungan klip.</p>
+              <div className="tech-list"><span>AI</span><span>Python</span><span>Video</span></div>
+            </div>
+          </article>
         </div>
       </section>
 
@@ -339,7 +321,6 @@ function App() {
           <span></span>
           <h2>Tentang Saya</h2>
         </div>
-
         <p>
           Saya memulai dari pekerjaan administrasi operasional yang penuh tugas
           manual dan berulang. Dari masalah nyata itu saya belajar Python untuk
@@ -349,20 +330,17 @@ function App() {
       </section>
 
       <section id="contact" className="contact-panel">
-        <div className="wa-circle">☎</div>
+        <div className="rocket">↗</div>
         <div>
           <h2>Ubah pekerjaan manual menjadi otomatis.</h2>
           <p>Lebih cepat, lebih akurat, lebih efisien.</p>
         </div>
-
         <a href={whatsappLink} target="_blank" rel="noreferrer" className="wa-contact">
           Hubungi Saya
         </a>
       </section>
 
-      <footer>
-        <p>© 2025 Rahul. All rights reserved.</p>
-      </footer>
+      <footer>© 2025 Rahul. All rights reserved.</footer>
     </main>
   );
 }
