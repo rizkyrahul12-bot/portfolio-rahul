@@ -15,119 +15,133 @@ const skills = [
 const projects = [
   {
     title: "OCR Invoice & Voucher Automation",
-    desc: "Sistem Python untuk membaca invoice dan voucher dari foto, mengekstrak data penting, lalu menyimpan hasilnya ke Excel.",
+    desc: "Membaca invoice dan voucher dari foto, memvalidasi pola data, lalu menyimpan hasilnya ke Excel.",
     tech: ["Python", "Tesseract OCR", "Excel", "Regex"],
   },
   {
     title: "ERP Automation with Selenium",
-    desc: "Otomasi input data ke sistem ERP menggunakan Selenium, termasuk handling tab, popup, error invoice, dan voucher tidak ditemukan.",
+    desc: "Otomasi proses input ke ERP, handling popup, multi-tab workflow, dan error recovery.",
     tech: ["Python", "Selenium", "Firefox", "ERP"],
   },
   {
     title: "Telegram OCR Bot",
-    desc: "Bot Telegram yang membantu proses input invoice dan voucher secara step-by-step dari foto langsung ke file Excel.",
-    tech: ["Telegram Bot", "Python", "OCR", "Automation"],
+    desc: "Bot Telegram step-by-step untuk membantu input invoice dan voucher langsung dari foto.",
+    tech: ["Telegram Bot", "Python", "OCR"],
   },
   {
     title: "AI Video Content Workflow",
-    desc: "Workflow produksi video pendek menggunakan AI video generator, narasi, potongan scene, dan penggabungan klip otomatis.",
-    tech: ["AI Video", "Python", "Content Workflow", "Automation"],
-  },
-  {
-    title: "Expense Tracker Telegram Bot",
-    desc: "Bot pencatat pengeluaran harian dengan sistem multi-user agar setiap pengguna memiliki laporan pengeluarannya sendiri.",
-    tech: ["Telegram Bot", "CSV", "Python", "Data"],
+    desc: "Workflow produksi video pendek AI, mulai dari prompt, scene, narasi, sampai penggabungan klip.",
+    tech: ["AI Video", "Python", "Content Workflow"],
   },
 ];
 
 function App() {
   return (
     <main className="page">
+      <div className="noise"></div>
+      <div className="orb orb-one"></div>
+      <div className="orb orb-two"></div>
+
       <nav className="navbar">
-        <div className="logo">
+        <div className="brand">
+          <span className="brand-icon">&lt;/&gt;</span>
           RAHUL<span>.</span>
         </div>
 
         <div className="nav-links">
+          <a href="#home">Home</a>
           <a href="#about">About</a>
-          <a href="#skills">Skills</a>
           <a href="#projects">Projects</a>
-          <a href="#workflow">Workflow</a>
+          <a href="#skills">Skills</a>
           <a href="#contact">Contact</a>
         </div>
+
+        <a className="talk-btn" href="#contact">Let's Talk</a>
       </nav>
 
-      <section className="hero">
-        <div className="hero-content">
-          <p className="badge">Python Automation • OCR • AI Workflow</p>
-
-          <h1>
-            Hi, I'm <span>Rizky Rahul Sidabutar</span>
-          </h1>
-
-          <h2>I Build Automation Systems With Python & AI</h2>
-
-          <p className="hero-text">
-            Saya membangun sistem otomasi untuk mempercepat pekerjaan manual:
-            mulai dari OCR invoice, Selenium ERP automation, Telegram bot,
-            hingga workflow produksi konten AI.
-          </p>
-
-          <div className="hero-buttons">
-            <a href="#projects" className="btn primary">
-              View Projects
-            </a>
-            <a href="#contact" className="btn secondary">
-              Contact Me
-            </a>
+      <section id="home" className="hero">
+        <div className="hero-left">
+          <div className="available">
+            <span></span>
+            Available for Freelance & Opportunities
           </div>
 
-          <div className="mini-terminal">
-            <div className="terminal-top">
-              <span></span>
-              <span></span>
-              <span></span>
+          <h1>
+            I Build Automation Systems With <b>Python & AI</b>
+          </h1>
+
+          <p className="hero-subtitle">
+            Saya membantu pekerjaan manual menjadi lebih cepat dengan Python,
+            OCR, Selenium, Telegram Bot, Excel Automation, dan AI workflow.
+          </p>
+
+          <div className="hero-actions">
+            <a href="#projects" className="btn primary">View My Projects</a>
+            <a href="#contact" className="btn secondary">Contact Me</a>
+          </div>
+
+          <div className="cyber-terminal">
+            <div className="terminal-head">
+              <div>
+                <span className="dot red"></span>
+                <span className="dot yellow"></span>
+                <span className="dot green"></span>
+              </div>
+              <p>automation@rahul:~</p>
             </div>
 
-            <pre>{`> python automation.py
-[OK] OCR invoice detected
-[OK] Voucher validated
-[OK] Excel updated
-[READY] System complete`}</pre>
+            <div className="terminal-body">
+              <p><span>&gt;</span> scanning invoice... <b>[██████████] 100%</b></p>
+              <p><span>&gt;</span> extracting data... <b>[██████████] 100%</b></p>
+              <p><span>&gt;</span> exporting to excel... <b>[██████████] 100%</b></p>
+              <p><span>&gt;</span> selenium submit... <strong>success ✅</strong></p>
+            </div>
           </div>
         </div>
 
-        <div className="hero-card">
-          <img src={foto} alt="Rahul" className="profile-image" />
-
-          <div className="profile-badge">
-            <strong>Automation Builder</strong>
-            <small>Python • OCR • Selenium</small>
+        <div className="hero-right">
+          <div className="lanyard lanyard-left">
+            <span>AUTOMATION BUILDER</span>
           </div>
+          <div className="lanyard lanyard-right">
+            <span>PYTHON • OCR • AI</span>
+          </div>
+
+          <div className="badge-wrap">
+            <div className="hook"></div>
+            <div className="id-card">
+              <div className="id-inner">
+                <img src={foto} alt="Rizky Rahul Sidabutar" />
+                <h3>RAHUL</h3>
+                <p>Automation Builder</p>
+                <small>Python • OCR • Selenium • AI</small>
+                <div className="barcode"></div>
+              </div>
+            </div>
+          </div>
+
+          <p className="swing-label">goyang~</p>
         </div>
       </section>
 
       <section id="about" className="section about">
         <p className="section-label">About Me</p>
-        <h2>From Operational Admin to Automation Builder</h2>
+        <h2>Operational Admin Who Builds Automation Tools</h2>
         <p>
-          Saya bekerja di bidang administrasi operasional dan sering menghadapi
-          pekerjaan manual yang berulang. Dari situ saya mulai belajar Python
-          untuk membuat alat bantu sendiri: membaca data dari gambar, mengisi
-          sistem ERP, membuat bot Telegram, dan membangun workflow kerja yang
-          lebih cepat.
+          Saya memulai dari pekerjaan administrasi operasional yang penuh tugas
+          manual dan berulang. Dari masalah nyata itu saya belajar Python untuk
+          membangun alat bantu: OCR invoice, Excel automation, ERP automation,
+          Telegram bot, dan workflow konten berbasis AI.
         </p>
       </section>
 
       <section id="skills" className="section">
-        <p className="section-label">Skills</p>
-        <h2>Tools & Technologies</h2>
+        <p className="section-label">Tech Stack</p>
+        <h2>Tools I Use</h2>
 
         <div className="skills-grid">
           {skills.map((skill) => (
-            <div className="skill-card" key={skill}>
-              {skill}
-            </div>
+            <div className="skill-card" key={skill}>{skill}</div>
           ))}
         </div>
       </section>
@@ -137,8 +151,9 @@ function App() {
         <h2>Real Automation Projects</h2>
 
         <div className="projects-grid">
-          {projects.map((project) => (
+          {projects.map((project, index) => (
             <article className="project-card" key={project.title}>
+              <div className="project-number">0{index + 1}</div>
               <h3>{project.title}</h3>
               <p>{project.desc}</p>
 
@@ -152,33 +167,6 @@ function App() {
         </div>
       </section>
 
-      <section id="workflow" className="section workflow">
-        <p className="section-label">Workflow</p>
-        <h2>How I Solve Problems</h2>
-
-        <div className="workflow-grid">
-          <div>
-            <strong>01</strong>
-            <p>Identify repetitive manual work</p>
-          </div>
-
-          <div>
-            <strong>02</strong>
-            <p>Build Python automation script</p>
-          </div>
-
-          <div>
-            <strong>03</strong>
-            <p>Test with real work data</p>
-          </div>
-
-          <div>
-            <strong>04</strong>
-            <p>Improve speed, accuracy, and error handling</p>
-          </div>
-        </div>
-      </section>
-
       <section id="contact" className="section contact">
         <p className="section-label">Contact</p>
         <h2>Let's Build Something Useful</h2>
@@ -186,10 +174,7 @@ function App() {
           Tertarik dengan automation, OCR, bot Telegram, atau workflow AI?
           Hubungi saya untuk diskusi project.
         </p>
-
-        <a href="mailto:your-email@example.com" className="btn primary">
-          Send Email
-        </a>
+        <a href="mailto:your-email@example.com" className="btn primary">Send Email</a>
       </section>
     </main>
   );
