@@ -788,3 +788,42 @@ footer {
   .solution-row span { display: none; }
   .wa-contact { min-width: 0; }
 }
+.typing-line{
+  overflow:hidden;
+  white-space:nowrap;
+  width:0;
+  border-right:3px solid #8d5dff;
+}
+
+.typing-1{
+  animation: typing1 1.5s steps(18,end) forwards, blink 0.7s infinite;
+}
+
+.typing-2{
+  animation: typing2 2.5s steps(35,end) forwards, blink 0.7s infinite;
+  animation-delay:1.7s;
+}
+
+.typing-3{
+  animation: typing3 1.8s steps(18,end) forwards, blink 0.7s infinite;
+  animation-delay:4.4s;
+}
+
+@keyframes typing1{
+  from{ width:0; }
+  to{ width:18ch; }
+}
+
+@keyframes typing2{
+  from{ width:0; }
+  to{ width:35ch; }
+}
+
+@keyframes typing3{
+  from{ width:0; }
+  to{ width:18ch; }
+}
+
+@keyframes blink{
+  50%{ border-color:transparent; }
+}

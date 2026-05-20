@@ -178,9 +178,18 @@ function App() {
       <section id="home" className="hero">
         <div className="hero-left">
           <h1 className="reveal-title">
-            Saya Membangun Sistem Otomatisasi dengan <b>Python & AI</b>
-          </h1>
+  <div className="typing-line typing-1">
+    Halo, saya Rahul.
+  </div>
 
+  <div className="typing-line typing-2">
+    Saya membangun sistem otomatisasi
+  </div>
+
+  <div className="typing-line typing-3">
+    dengan Python & AI.
+  </div>
+</h1>
           <p className="hero-text">
             Saya membantu pekerjaan manual menjadi lebih cepat dengan Python,
             OCR, Selenium, Telegram Bot, Excel Automation, dan workflow AI.
