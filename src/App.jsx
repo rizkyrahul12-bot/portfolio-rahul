@@ -1,132 +1,292 @@
+import { useEffect, useRef, useState } from "react";
 import "./App.css";
 import foto from "./assets/fotoku.png";
 
-const skills = [
-  "Python",
-  "Selenium",
-  "OCR",
-  "Telegram Bot",
-  "Excel Automation",
-  "AI Workflow",
-  "React",
-  "Vite",
+const whatsappLink = "https://wa.me/6282170252082";
+
+const tools = [
+  { name: "Python", icon: "🐍" },
+  { name: "Selenium", icon: "✅" },
+  { name: "OCR", icon: "▣" },
+  { name: "Pandas", icon: "▥" },
+  { name: "Telegram", icon: "✈️" },
+  { name: "Excel", icon: "📊" },
+  { name: "GitHub", icon: "🐙" },
+  { name: "Docker", icon: "🐳" },
 ];
 
 const projects = [
   {
-    title: "OCR Invoice & Voucher Automation",
-    desc: "Membaca invoice dan voucher dari foto, memvalidasi pola data, lalu menyimpan hasilnya ke Excel.",
-    tech: ["Python", "Tesseract OCR", "Excel", "Regex"],
+    title: "Sistem Otomatisasi Invoice",
+    status: "Selesai",
+    image: "📄",
+    desc: "Otomatisasi pemrosesan invoice menggunakan OCR, validasi pola data, dan export ke Excel.",
+    tech: ["Python", "OCR", "Pandas", "Selenium"],
   },
   {
-    title: "ERP Automation with Selenium",
-    desc: "Otomasi proses input ke ERP, handling popup, multi-tab workflow, dan error recovery.",
-    tech: ["Python", "Selenium", "Firefox", "ERP"],
+    title: "Bot Telegram OCR",
+    status: "Selesai",
+    image: "💬",
+    desc: "Bot Telegram untuk membaca invoice/voucher dari foto dan menyimpan hasilnya ke Excel.",
+    tech: ["Python", "Telegram", "OCR"],
   },
   {
-    title: "Telegram OCR Bot",
-    desc: "Bot Telegram step-by-step untuk membantu input invoice dan voucher langsung dari foto.",
-    tech: ["Telegram Bot", "Python", "OCR"],
-  },
-  {
-    title: "AI Video Content Workflow",
-    desc: "Workflow produksi video pendek AI, mulai dari prompt, scene, narasi, sampai penggabungan klip.",
-    tech: ["AI Video", "Python", "Content Workflow"],
+    title: "AI Video Workflow",
+    status: "Dalam Proses",
+    image: "🎬",
+    desc: "Workflow produksi video AI dari prompt, scene, narasi, hingga penggabungan klip.",
+    tech: ["AI", "Python", "Video"],
   },
 ];
+
+function ElasticNameTag() {
+  const tagRef = useRef(null);
+  const draggingRef = useRef(false);
+  const posRef = useRef({ x: 0, y: 0 });
+  const velRef = useRef({ x: 0, y: 0 });
+  const pointerRef = useRef({ x: 0, y: 0 });
+  const frameRef = useRef(null);
+  const [dragging, setDragging] = useState(false);
+
+  useEffect(() => {
+    const animate = () => {
+      const pos = posRef.current;
+      const vel = velRef.current;
+
+      if (draggingRef.current) {
+        const dx = pointerRef.current.x - pos.x;
+        const dy = pointerRef.current.y - pos.y;
+        vel.x += dx * 0.23;
+        vel.y += dy * 0.23;
+      } else {
+        vel.x += (0 - pos.x) * 0.075;
+        vel.y += (0 - pos.y) * 0.075;
+      }
+
+      vel.x *= 0.7;
+      vel.y *= 0.7;
+
+      pos.x += vel.x;
+      pos.y += vel.y;
+
+      const distance = Math.min(1, Math.hypot(pos.x, pos.y) / 260);
+      const rotate = pos.x * 0.04;
+      const scaleY = 1 + distance * 0.04;
+      const scaleX = 1 - distance * 0.015;
+
+      if (tagRef.current) {
+        tagRef.current.style.transform = `translate3d(${pos.x}px, ${pos.y}px, 0) rotate(${rotate}deg) scale(${scaleX}, ${scaleY})`;
+      }
+
+      frameRef.current = requestAnimationFrame(animate);
+    };
+
+    frameRef.current = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(frameRef.current);
+  }, []);
+
+  const getPoint = (e) => (e.touches ? e.touches[0] : e);
+
+  const startDrag = (e) => {
+    const point = getPoint(e);
+    draggingRef.current = true;
+    setDragging(true);
+    pointerRef.current = {
+      x: point.clientX - window.innerWidth / 2,
+      y: point.clientY - window.innerHeight / 2,
+    };
+  };
+
+  const moveDrag = (e) => {
+    if (!draggingRef.current) return;
+    const point = getPoint(e);
+    pointerRef.current = {
+      x: point.clientX - window.innerWidth / 2,
+      y: point.clientY - window.innerHeight / 2,
+    };
+  };
+
+  const endDrag = () => {
+    draggingRef.current = false;
+    setDragging(false);
+  };
+
+  useEffect(() => {
+    window.addEventListener("mousemove", moveDrag);
+    window.addEventListener("mouseup", endDrag);
+    window.addEventListener("touchmove", moveDrag, { passive: true });
+    window.addEventListener("touchend", endDrag);
+
+    return () => {
+      window.removeEventListener("mousemove", moveDrag);
+      window.removeEventListener("mouseup", endDrag);
+      window.removeEventListener("touchmove", moveDrag);
+      window.removeEventListener("touchend", endDrag);
+    };
+  }, []);
+
+  return (
+    <div className="elastic-stage">
+      <div className={`rubber rubber-left ${dragging ? "stretching" : ""}`}></div>
+      <div className={`rubber rubber-right ${dragging ? "stretching" : ""}`}></div>
+
+      <div
+        ref={tagRef}
+        className={`badge-wrap ${dragging ? "is-dragging" : ""}`}
+        onMouseDown={startDrag}
+        onTouchStart={startDrag}
+      >
+        <div className="metal-ring"></div>
+
+        <div className="id-card">
+          <div className="id-hole"></div>
+          <div className="id-shine"></div>
+
+          <div className="photo-frame">
+            <img src={foto} alt="Rizky Rahul Sidabutar" draggable="false" />
+          </div>
+
+          <div className="id-info">
+            <h3>RAHUL</h3>
+            <p>Automation Builder</p>
+            <small>Python • OCR • Selenium • AI</small>
+            <div className="barcode"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 function App() {
   return (
     <main className="page">
-      <div className="noise"></div>
-      <div className="orb orb-one"></div>
-      <div className="orb orb-two"></div>
+      <div className="grid-bg"></div>
+      <div className="orb orb-a"></div>
+      <div className="orb orb-b"></div>
 
       <nav className="navbar">
         <div className="brand">
-          <span className="brand-icon">&lt;/&gt;</span>
-          RAHUL<span>.</span>
+          <span className="code-icon">&lt;/&gt;</span>
+          RAHUL<span className="dot-logo">.</span>
         </div>
 
         <div className="nav-links">
-          <a href="#home">Home</a>
-          <a href="#about">About</a>
-          <a href="#projects">Projects</a>
-          <a href="#skills">Skills</a>
-          <a href="#contact">Contact</a>
+          <a href="#home">Beranda</a>
+          <a href="#about">Tentang</a>
+          <a href="#projects">Proyek</a>
+          <a href="#skills">Keahlian</a>
+          <a href="#contact">Kontak</a>
         </div>
 
-        <a className="talk-btn" href="#contact">Let's Talk</a>
+        <a href={whatsappLink} target="_blank" rel="noreferrer" className="wa-top">
+          <span>☘</span> WhatsApp Saya
+        </a>
       </nav>
 
       <section id="home" className="hero">
         <div className="hero-left">
-          <div className="available">
+          <div className="status-pill">
             <span></span>
-            Available for Freelance & Opportunities
+            Tersedia untuk Freelance & Kesempatan Kerja
           </div>
 
           <h1>
-            I Build Automation Systems With <b>Python & AI</b>
+            Saya Membangun Sistem Otomatisasi dengan <b>Python & AI</b>
           </h1>
 
-          <p className="hero-subtitle">
+          <p className="hero-text">
             Saya membantu pekerjaan manual menjadi lebih cepat dengan Python,
-            OCR, Selenium, Telegram Bot, Excel Automation, dan AI workflow.
+            OCR, Selenium, Telegram Bot, Excel Automation, dan workflow AI.
           </p>
 
           <div className="hero-actions">
-            <a href="#projects" className="btn primary">View My Projects</a>
-            <a href="#contact" className="btn secondary">Contact Me</a>
+            <a href={whatsappLink} target="_blank" rel="noreferrer" className="btn wa-btn">
+              <span>☘</span> Chat via WhatsApp
+            </a>
+            <a href="#projects" className="btn outline-btn">
+              Lihat Proyek Saya
+            </a>
           </div>
 
-          <div className="cyber-terminal">
+          <div className="terminal">
             <div className="terminal-head">
-              <div>
-                <span className="dot red"></span>
-                <span className="dot yellow"></span>
-                <span className="dot green"></span>
-              </div>
-              <p>automation@rahul:~</p>
+              <span className="lamp red"></span>
+              <span className="lamp yellow"></span>
+              <span className="lamp green"></span>
+              <p>terminal@rahul:~</p>
             </div>
 
             <div className="terminal-body">
-              <p><span>&gt;</span> scanning invoice... <b>[██████████] 100%</b></p>
-              <p><span>&gt;</span> extracting data... <b>[██████████] 100%</b></p>
-              <p><span>&gt;</span> exporting to excel... <b>[██████████] 100%</b></p>
-              <p><span>&gt;</span> selenium submit... <strong>success ✅</strong></p>
+              <p><span>&gt;</span> memindai dokumen <b>100%</b></p>
+              <p><span>&gt;</span> mengekstrak data <b>100%</b></p>
+              <p><span>&gt;</span> memproses data <b>100%</b></p>
+              <p><span>&gt;</span> menyimpan hasil <strong>berhasil ✅</strong></p>
             </div>
           </div>
         </div>
 
         <div className="hero-right">
-          <div className="lanyard lanyard-left">
-            <span>AUTOMATION BUILDER</span>
-          </div>
-          <div className="lanyard lanyard-right">
-            <span>PYTHON • OCR • AI</span>
-          </div>
-
-          <div className="badge-wrap">
-            <div className="hook"></div>
-            <div className="id-card">
-              <div className="id-inner">
-                <img src={foto} alt="Rizky Rahul Sidabutar" />
-                <h3>RAHUL</h3>
-                <p>Automation Builder</p>
-                <small>Python • OCR • Selenium • AI</small>
-                <div className="barcode"></div>
-              </div>
-            </div>
-          </div>
-
-          <p className="swing-label">goyang~</p>
+          <div className="lanyard lanyard-left"><span>AUTOMATION BUILDER</span></div>
+          <div className="lanyard lanyard-right"><span>PYTHON • OCR • AI</span></div>
+          <ElasticNameTag />
         </div>
       </section>
 
-      <section id="about" className="section about">
-        <p className="section-label">About Me</p>
-        <h2>Operational Admin Who Builds Automation Tools</h2>
+      <section id="skills" className="panel-section tools-section">
+        <div className="section-title">
+          <span></span>
+          <h2>Tools & Teknologi</h2>
+        </div>
+
+        <div className="tools-grid">
+          {tools.map((tool, index) => (
+            <div className="tool-card" style={{ "--i": index }} key={tool.name}>
+              <div className="tool-icon">{tool.icon}</div>
+              <p>{tool.name}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section id="projects" className="panel-section">
+        <div className="section-title row">
+          <div>
+            <span></span>
+            <h2>Proyek Unggulan</h2>
+          </div>
+          <a href="#contact">Lihat Semua Proyek →</a>
+        </div>
+
+        <div className="project-grid">
+          {projects.map((project) => (
+            <article className="project-card" key={project.title}>
+              <div className="project-image">{project.image}</div>
+
+              <div className="project-content">
+                <small className={project.status === "Selesai" ? "done" : "progress"}>
+                  {project.status}
+                </small>
+                <h3>{project.title}</h3>
+                <p>{project.desc}</p>
+
+                <div className="tech-list">
+                  {project.tech.map((item) => (
+                    <span key={item}>{item}</span>
+                  ))}
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section id="about" className="panel-section about">
+        <div className="section-title">
+          <span></span>
+          <h2>Tentang Saya</h2>
+        </div>
+
         <p>
           Saya memulai dari pekerjaan administrasi operasional yang penuh tugas
           manual dan berulang. Dari masalah nyata itu saya belajar Python untuk
@@ -135,47 +295,22 @@ function App() {
         </p>
       </section>
 
-      <section id="skills" className="section">
-        <p className="section-label">Tech Stack</p>
-        <h2>Tools I Use</h2>
-
-        <div className="skills-grid">
-          {skills.map((skill) => (
-            <div className="skill-card" key={skill}>{skill}</div>
-          ))}
+      <section id="contact" className="contact-panel">
+        <div className="wa-circle">☘</div>
+        <div>
+          <h2>Punya proyek untuk diotomatisasi?</h2>
+          <p>Hubungi saya langsung via WhatsApp.</p>
         </div>
+
+        <a href={whatsappLink} target="_blank" rel="noreferrer" className="wa-contact">
+          <strong>+62 821-7025-2082</strong>
+          <span>WhatsApp Saya</span>
+        </a>
       </section>
 
-      <section id="projects" className="section">
-        <p className="section-label">Projects</p>
-        <h2>Real Automation Projects</h2>
-
-        <div className="projects-grid">
-          {projects.map((project, index) => (
-            <article className="project-card" key={project.title}>
-              <div className="project-number">0{index + 1}</div>
-              <h3>{project.title}</h3>
-              <p>{project.desc}</p>
-
-              <div className="tech-list">
-                {project.tech.map((item) => (
-                  <span key={item}>{item}</span>
-                ))}
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section id="contact" className="section contact">
-        <p className="section-label">Contact</p>
-        <h2>Let's Build Something Useful</h2>
-        <p>
-          Tertarik dengan automation, OCR, bot Telegram, atau workflow AI?
-          Hubungi saya untuk diskusi project.
-        </p>
-        <a href="mailto:your-email@example.com" className="btn primary">Send Email</a>
-      </section>
+      <footer>
+        <p>© 2025 Rahul. All rights reserved.</p>
+      </footer>
     </main>
   );
 }
